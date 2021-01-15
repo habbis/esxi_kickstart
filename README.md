@@ -20,7 +20,7 @@ cd /tmp/esxi
 
 Then mount the iso 
 ```
-mount /tmp/esxi_iso
+mount esxi.iso /tmp/esxi_iso
 ```
 
 copy files to the working dir
