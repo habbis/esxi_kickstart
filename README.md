@@ -47,11 +47,10 @@ LABEL kickstart
   MENU LABEL ESXi-7.0U1c-17325551-standard kickstart
 ```
 
-Then create a bios boot iso uefi is to do
+The option `ks=cdrom:/KS.CFG` will tell the installer where the kistart files is.
+
+Then create a bios boot iso from the working dir.
 ```
-mkisofs -o /tmp/esxi.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-platform efi -b efiboot.img -no-emul-boot -J -r  ~/kickstart_iso_esxi/esxi7_mk1/
+mkisofs -o /tmp/esxi.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -J -r /tmp/esxi/
 ```
-
-
-
 
