@@ -8,7 +8,8 @@ Become admin user or use sudo then get the esxi iso.
 create a folder
 
 ```
-mkdir -p /tmp/esxi/esxi_iso
+mkdir  /tmp/esxi/
+mkdir  /tmp/esxi_iso
 ```
 
 Go to folder
@@ -19,7 +20,7 @@ cd /tmp/esxi
 
 Then mount the iso 
 ```
-mount /tmp/esxi/esxi_iso
+mount /tmp/esxi_iso
 ```
 
 copy files to the working dir
@@ -51,6 +52,14 @@ The option `ks=cdrom:/KS.CFG` will tell the installer where the kistart files is
 
 Then create a bios boot iso from the working dir.
 ```
-mkisofs -o /tmp/esxi.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -J -r /tmp/esxi/
+mkisofs -o /tmp/esxi.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -J -r /tmp/
 ```
 
+
+Links: 
+
+https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-C03EADEA-A192-4AB4-9B71-9256A9CB1F9C.html
+
+http://www.softpanorama.org/Commercial_linuxes/RHEL/Installation/Kickstart/creating_boot_image_that_points_to_remote_kickstart_file.shtml
+
+http://www.softpanorama.org/Commercial_linuxes/RHEL/Installation/Kickstart/modifing_iso_image_to_include_kickstart_file.shtml
