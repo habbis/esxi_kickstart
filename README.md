@@ -24,7 +24,7 @@ mount esxi.iso /tmp/esxi_iso
 ```
 
 copy files to the working dir
-````
+```
 cp -au /tmp/esxi/esxi_iso/*  /mnt/esxi/
 ```
 
