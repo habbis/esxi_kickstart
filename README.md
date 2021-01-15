@@ -14,7 +14,7 @@ mkdir  /tmp/esxi_iso
 
 Go to folder
 
-````
+```
 cd /tmp/esxi
 ```
 
