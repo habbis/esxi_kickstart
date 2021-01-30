@@ -50,6 +50,8 @@ LABEL kickstart
 
 The option `ks=cdrom:/KS.CFG` will tell the installer where the kistart files is.
 
+To boot from a usb drive set `ks=usb:/KS.CFG`
+
 Then create a bios boot iso from the working dir.
 ```
 mkisofs -o /tmp/esxi.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -J -r /tmp/
