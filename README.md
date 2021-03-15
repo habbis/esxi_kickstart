@@ -14,7 +14,7 @@ mkdir  /tmp/custom_esxi
 
 Go to folder
 
-````
+```
 cd /tmp/esxi
 ```
 
@@ -24,7 +24,7 @@ mount esxi.iso /tmp/esxi_iso
 ```
 
 copy files to the working dir
-````
+```
 cp -au /tmp/esxi/esxi_iso/*  /tmp/custom_esxi/
 ```
 
@@ -73,6 +73,7 @@ cd test/etc/rc.local.d
 ```
 
 Create mask.sh file with the following content
+
 ```
 #!/bin/bash
 localcli storage core claimrule add -r 2012 -P MASK_PATH -t transport -R fc
@@ -87,14 +88,18 @@ sed -i 's/localcli.*//g' /etc/rc.local
 rm -f /etc/init.d/maskcleanup
 __CLEANUP_MASKING__
 chmod +x /etc/init.d/maskcleanup
+
 ```
 
+
 Make the script file executable
+
 ```
 chmod +x mask.sh
 ```
 
 Package the module
+
 ```
 cd ../..
 tar cvf mask.tgz *
@@ -129,6 +134,7 @@ Then go the section on how to generate the custom iso
 ### working with Tar xz
 
 compress
+
 ```
 $ tar cJvf xzcompressed.tar.xz directory3
 ```
