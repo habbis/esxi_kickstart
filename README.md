@@ -9,12 +9,12 @@ create a folder
 
 ```
 mkdir  /tmp/esxi/
-mkdir  /tmp/esxi_iso
+mkdir  /tmp/custom_esxi
 ```
 
 Go to folder
 
-```
+````
 cd /tmp/esxi
 ```
 
@@ -24,8 +24,8 @@ mount esxi.iso /tmp/esxi_iso
 ```
 
 copy files to the working dir
-```
-cp -au /tmp/esxi/esxi_iso/*  /mnt/esxi/
+````
+cp -au /tmp/esxi/esxi_iso/*  /tmp/custom_esxi/
 ```
 
 Add the example kickstart file found in the repo to the working dir and make 
@@ -50,15 +50,103 @@ LABEL kickstart
 
 The option `ks=cdrom:/KS.CFG` will tell the installer where the kistart files is.
 
-To boot from a usb drive set `ks=usb:/KS.CFG`
-
 Then create a bios boot iso from the working dir.
 ```
-mkisofs -o /tmp/esxi.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -J -r /tmp/
+mkisofs -o /tmp/esxi.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -J -r /tmp/custom_esxi
+```
+To create uefi that also work with bios 
+```
+genisoimage -relaxed-filenames -J -R -o ~/custom_esxi.iso -b isolinux.bin -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e efiboot.img -no-emul-boot /tmp/custom_esxi
 ```
 
+How to mask luns from esxi installer
 
+The example below describes how to disable Fiber Chanel during the deployment process.
+
+Prepare TGZ module with scripts injected
+
+Create folders tree structure
+
+```
+mkdir -p test/etc/rc.local.d
+cd test/etc/rc.local.d
+```
+
+Create mask.sh file with the following content
+```
+#!/bin/bash
+localcli storage core claimrule add -r 2012 -P MASK_PATH -t transport -R fc
+localcli storage core claimrule load
+localcli storage core claiming unclaim -t plugin -P NMP
+localcli storage core claimrule run
+cat >> /etc/rc.local << __CLEANUP_MASKING__
+localcli storage core claimrule remove -r 2012
+__CLEANUP_MASKING__
+cat > /etc/init.d/maskcleanup << __CLEANUP_MASKING__
+sed -i 's/localcli.*//g' /etc/rc.local
+rm -f /etc/init.d/maskcleanup
+__CLEANUP_MASKING__
+chmod +x /etc/init.d/maskcleanup
+```
+
+Make the script file executable
+```
+chmod +x mask.sh
+```
+
+Package the module
+```
+cd ../..
+tar cvf mask.tgz *
+```
+
+Upload/Mount ESXi image to your Linux machine and copy ISO content locally
+For uploaded ISO image:
+
+```
+mkdir esxi_source
+sudo mount -o loop VMware-VMvisor-Installer-6.0.0.update02-3620759.x86_64.iso /mnt
+cp -r /mnt esxi_source
+sudo umount /mnt
+```
+
+Copy mask.tgz module to the esxi_source folder 
+
+Append boot.cfg file in esxi_source folder to load our module
+
+Add ' --- /mask.tgz' to the end of the string with modules
+examples for uefi boot and bios boot '
+
+```
+sed -i '/^modules/ s/$/ --- \/mask.tgz/' efi/boot/boot.cfg
+
+sed -i '/^modules/ s/$/ --- \/mask.tgz/' ./boot.cfg
+```
+
+Then go the section on how to generate the custom iso
+
+
+### working with Tar xz
+
+compress
+```
+$ tar cJvf xzcompressed.tar.xz directory3
+```
+Peek
+```
+$ tar tJvf xzcompressed.tar.xz
+```
+Decompress
+```
+$ tar xJvf xzcompressed.tar.xz
+```
+To sha256sum hash to the password for kickstart 
+```
+openssl passwd -5 "yourpassword"
+```
 Links: 
+
+ https://int.basefarm.com/display/systems/VMware+vSphere+-+Operation+Manuals
 
 https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-C03EADEA-A192-4AB4-9B71-9256A9CB1F9C.html
 
