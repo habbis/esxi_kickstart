@@ -111,6 +111,7 @@ sudo umount /mnt
 ```
 
 Copy mask.tgz module to the esxi_source folder 
+
 Append boot.cfg file in esxi_source folder to load our module
 
 Add ' --- /mask.tgz' to the end of the string with modules
