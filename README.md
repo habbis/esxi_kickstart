@@ -152,7 +152,6 @@ openssl passwd -5 "yourpassword"
 ```
 Links: 
 
- https://int.basefarm.com/display/systems/VMware+vSphere+-+Operation+Manuals
 
 https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-C03EADEA-A192-4AB4-9B71-9256A9CB1F9C.html
 
