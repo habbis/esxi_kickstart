@@ -158,3 +158,5 @@ https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-C
 http://www.softpanorama.org/Commercial_linuxes/RHEL/Installation/Kickstart/creating_boot_image_that_points_to_remote_kickstart_file.shtml
 
 http://www.softpanorama.org/Commercial_linuxes/RHEL/Installation/Kickstart/modifing_iso_image_to_include_kickstart_file.shtml
+
+https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.upgrade.doc/GUID-61A14EBB-5CF3-43EE-87EF-DB8EC6D83698.html
