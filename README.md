@@ -150,6 +150,14 @@ To sha256sum hash to the password for kickstart
 ```
 openssl passwd -5 "yourpassword"
 ```
+If openssl dont work use this metod 
+
+```
+sudo apt install -y whois
+sudo yum install -y whois
+
+mkpasswd --method=sha-512
+```
 Links: 
 
 
